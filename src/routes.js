@@ -3,6 +3,7 @@ import Tags from "./components/tags/Tags";
 import TagEdit from "./components/tags/TagEdit";
 import Users from "./components/users/Users";
 import UserEdit from "./components/users/UserEdit";
+import SurveyEdit from "./components/surveys/SurveyEdit";
 
 export const routes = [
   {
@@ -13,6 +14,10 @@ export const routes = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     color: "primary",
     icon: "fas fa-poll-h",
+  },
+  {
+    path: "/survey/:id?",
+    component: SurveyEdit
   },
   {
     path: "/users",

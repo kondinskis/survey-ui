@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import { useAxios } from "../../http/axios-hook";
 import { Container, Row, Col, Button } from "reactstrap";
 import SurveyItem from "./SurveyItem";
-
-const surveys = [
-  {
-    title: "Download survey",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    tags: ["design", "system", "creative"],
-    color: "primary",
-  },
-  {
-    title: "Build Something",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    tags: ["business", "vision", "sucess"],
-    color: "success",
-  },
-  {
-    title: "Prepare Launch",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    tags: ["marketing", "product", "launch"],
-    color: "warning",
-  },
-];
+import { Link } from "react-router-dom";
 
 const Survey = () => {
+  const [surveys, setSurveys] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const axios = useAxios();
+
+  const fetchSurveys = () => {
+    setLoading(true);
+    axios
+      .get("/surveys")
+      .then(({ data }) => setSurveys(data))
+      .then(() => setLoading(false));
+  };
+
+  const deleteSurvey = (id) => {
+    axios.delete(`/surveys/${id}`).then(() => fetchSurveys());
+  };
+
+  useEffect(() => {
+    fetchSurveys();
+  }, [axios]);
+
   return (
     <Container>
       <Row className="justify-content-center">
         <div class="d-flex justify-content-end col-lg-12 mb-4">
-          <Button color="warning">
-            <i className="fas fa-poll-h"></i> Create survey
-          </Button>
+          <Link to="/survey">
+            <Button color="warning">
+              <i className="fas fa-poll-h"></i> Create survey
+            </Button>
+          </Link>
         </div>
         <Col lg="12">
           <Row className="row-grid">
             {surveys.map((survey) => (
               <Col lg="4">
-                <SurveyItem {...survey} />
+                <SurveyItem {...survey} onDelete={deleteSurvey} />
               </Col>
             ))}
           </Row>
