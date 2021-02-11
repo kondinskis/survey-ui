@@ -1,10 +1,11 @@
 import Survey from "./components/surveys/Survey";
+import Tag from "./components/tags/Tag";
+import TagEdit from "./components/tags/TagEdit";
 
 export const routes = [
   {
-    path: "/",
+    path: "/surveys",
     component: Survey,
-    exact: true,
     title: "Surveys",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -14,7 +15,6 @@ export const routes = [
   {
     path: "/users",
     component: Survey,
-    exact: true,
     title: "Users",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -23,12 +23,15 @@ export const routes = [
   },
   {
     path: "/tags",
-    component: Survey,
-    exact: true,
+    component: Tag,
     title: "Tags",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     color: "warning",
     icon: "fas fa-tags",
   },
+  {
+    path: "/tag/:id?",
+    component: TagEdit,
+  }
 ];

@@ -1,11 +1,12 @@
 import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import { routes } from "../routes";
 
 import UserContext from "../context/User";
 import Topbar from "./core/Topbar";
 import Header from "./core/Header";
+import { Container, Row } from "reactstrap";
 
 const Entry = (props) => {
   const getRoutes = (routes) => {
@@ -20,6 +21,7 @@ const Entry = (props) => {
       );
     });
   };
+  console.log("test");
 
   return (
     <UserContext.Provider value={{ username: "stefan" }}>
@@ -29,7 +31,9 @@ const Entry = (props) => {
 
         <Switch>
           <section className="section section-lg pt-lg-0 mt--200">
-            {getRoutes(routes)}
+            <Container>
+              <Row className="justify-content-center">{getRoutes(routes)}</Row>
+            </Container>
           </section>
         </Switch>
       </div>

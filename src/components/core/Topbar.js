@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
-  Button,
   UncontrolledCollapse,
   DropdownMenu,
   DropdownItem,
@@ -11,13 +10,10 @@ import {
   Media,
   NavbarBrand,
   Navbar,
-  NavItem,
-  NavLink,
   Nav,
   Container,
   Row,
   Col,
-  UncontrolledTooltip,
 } from "reactstrap";
 
 import UserContext from "../../context/User";
