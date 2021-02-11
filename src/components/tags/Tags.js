@@ -5,7 +5,7 @@ import { Row, Col, Button } from "reactstrap";
 import { useAxios } from "../../http/axios-hook";
 import TagItem from "./TagItem";
 
-const Tag = () => {
+const Tags = () => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
   const axios = useAxios();
@@ -50,4 +50,4 @@ const Tag = () => {
   );
 };
 
-export default Tag;
+export default Tags;

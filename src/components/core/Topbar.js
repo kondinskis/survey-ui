@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -20,6 +20,13 @@ import UserContext from "../../context/User";
 
 const Topbar = ({ routes }) => {
   const [collapseClasses, setCollapseClasses] = useState("");
+
+  const history = useHistory();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/login");
+  }
 
   return (
     <>
@@ -67,7 +74,7 @@ const Topbar = ({ routes }) => {
                       </DropdownToggle>
                       <DropdownMenu className="dropdown-menu-xl">
                         <div className="dropdown-menu-inner">
-                          {routes.map((route) => (
+                          {routes.filter(route => route.title).map((route) => (
                             <Media
                               className="d-flex align-items-center"
                               to={route.path}
@@ -101,13 +108,13 @@ const Topbar = ({ routes }) => {
                           <i className="fas fa-user text-white"></i>
                           <Media className="ml-2 d-none d-md-block">
                             <span className="mb-0 text-sm font-weight-bold">
-                              {user.username}
+                              {user.identity}
                             </span>
                           </Media>
                         </Media>
                       </DropdownToggle>
                       <DropdownMenu className="dropdown-menu-arrow" right>
-                        <DropdownItem>
+                        <DropdownItem onClick={handleLogout}>
                           <span>Logout</span>
                         </DropdownItem>
                       </DropdownMenu>

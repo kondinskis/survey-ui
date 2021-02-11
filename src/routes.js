@@ -1,6 +1,8 @@
 import Survey from "./components/surveys/Survey";
-import Tag from "./components/tags/Tag";
+import Tags from "./components/tags/Tags";
 import TagEdit from "./components/tags/TagEdit";
+import Users from "./components/users/Users";
+import UserEdit from "./components/users/UserEdit";
 
 export const routes = [
   {
@@ -14,7 +16,7 @@ export const routes = [
   },
   {
     path: "/users",
-    component: Survey,
+    component: Users,
     title: "Users",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -22,8 +24,12 @@ export const routes = [
     icon: "fas fa-users",
   },
   {
+    path: "/user/:id?",
+    component: UserEdit,
+  },
+  {
     path: "/tags",
-    component: Tag,
+    component: Tags,
     title: "Tags",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",

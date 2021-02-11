@@ -88,13 +88,6 @@ const TagEdit = () => {
                 <Button color="success" type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Spinner size="sm" color="white" />} Save
                 </Button>
-                <Button
-                  color="secondary"
-                  type="submit"
-                  onClick={() => onCancel()}
-                >
-                  Cancel
-                </Button>
               </div>
             </Form>
           )}

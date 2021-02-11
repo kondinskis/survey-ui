@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import { routes } from "../routes";
 
@@ -21,10 +21,9 @@ const Entry = (props) => {
       );
     });
   };
-  console.log("test");
 
   return (
-    <UserContext.Provider value={{ username: "stefan" }}>
+    <UserContext.Provider value={props.user}>
       <div className="main-content">
         {<Topbar {...props} routes={routes} />}
         <Header />
@@ -32,7 +31,12 @@ const Entry = (props) => {
         <Switch>
           <section className="section section-lg pt-lg-0 mt--200">
             <Container>
-              <Row className="justify-content-center">{getRoutes(routes)}</Row>
+              <Row className="justify-content-center">
+                <Route path="/" exact>
+                  <Redirect to={`/surveys`} />
+                </Route>
+                {getRoutes(routes)}
+              </Row>
             </Container>
           </section>
         </Switch>
