@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Field, FieldArray } from "formik";
 
-import { Button, Card, CardBody, Col, Spinner } from "reactstrap";
+import { Button, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import CustomInput from "../shared/CustomInput";
-
-import { useParams, useHistory } from "react-router-dom";
-import { useAxios } from "../../http/axios-hook";
-
-import * as Yup from "yup";
 
 const SurveyQuestionForm = ({
   values,
@@ -17,6 +12,9 @@ const SurveyQuestionForm = ({
   deleteQuestion,
   deleteOption,
 }) => {
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+
   return (
     <FieldArray
       name="questions"
@@ -25,15 +23,12 @@ const SurveyQuestionForm = ({
           <div className="col-12">
             <div className="d-flex align-items-center mb-2">
               <h4 className="mb-0">Questions</h4>
-              <Button color="success" size="sm" className="ml-2" onClick={() => addQuestion()}>
-                <i className="fas fa-plus"></i> NEW
-              </Button>
             </div>
 
             {values.questions &&
               values.questions.length > 0 &&
               values.questions.map((question, index) => (
-                <div className="position-relative">
+                index === currentQuestion && <div className="position-relative">
                   <Field
                     name={`questions.${index}.question`}
                     component={CustomInput}
@@ -42,7 +37,7 @@ const SurveyQuestionForm = ({
                   <Button
                     color="link"
                     className="position-absolute top-0 right-0 text-danger"
-                    
+
                     onClick={() => deleteQuestion(index)}
                     style={{ padding: "0.05rem 0.3rem" }}
                   >
@@ -74,7 +69,7 @@ const SurveyQuestionForm = ({
                                 </Button>
                               </div>
                             ))}
-                          <div className="col-3 text-center d-flex align-items-center justify-content-center" style={{"minHeight": "5rem"}}>
+                          <div className="col-3 text-center d-flex align-items-center justify-content-center" style={{ "minHeight": "5rem" }}>
                             <Button
                               color="success"
                               size="sm"
@@ -90,6 +85,22 @@ const SurveyQuestionForm = ({
                 </div>
               ))}
           </div>
+          <Pagination className="d-flex w-100 justify-content-center mt-4" size="sm">
+            {Array.from(Array(values.questions.length)).map((_, i) => (
+              <PaginationItem active={i === currentQuestion}>
+                <PaginationLink onClick={() => setCurrentQuestion(i)} type="button">
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>)
+            )}
+            <PaginationItem>
+              <PaginationLink type="button" onClick={() => {
+                addQuestion();
+                setCurrentQuestion(values.questions.length);
+              }}
+                className="bg-success text-white border-success"> <i className="fas fa-plus"></i> NEW </PaginationLink>
+            </PaginationItem>
+          </Pagination>
         </>
       )}
     />

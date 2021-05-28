@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/scss/main.scss";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

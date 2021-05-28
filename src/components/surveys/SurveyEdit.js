@@ -2,25 +2,30 @@ import React, { useEffect, useState } from "react";
 
 import { Formik, Form, Field } from "formik";
 
-import { Button, Card, CardBody, Spinner } from "reactstrap";
+import { Button, Card, CardBody, Spinner, Label } from "reactstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
+
 import CustomInput from "../shared/CustomInput";
 
 import { useParams, useHistory } from "react-router-dom";
 import { useAxios } from "../../http/axios-hook";
 
 import * as Yup from "yup";
+import * as dayjs from "dayjs";
 import SurveyQuestionForm from "./SyrveyQuestionForm";
 
 const SurveyEdit = () => {
-  const questionInitialValues = {
-    question: "",
-    order: 0,
-    options: [],
-  };
-
   const optionInitialValues = {
     option: "",
     order: 0,
+  };
+  
+  const questionInitialValues = {
+    question: "",
+    order: 0,
+    options: [
+      optionInitialValues
+    ],
   };
 
   const [initialValues, setInitialValues] = useState({
@@ -29,8 +34,9 @@ const SurveyEdit = () => {
     active_till: "",
     active_from: "",
     questions: [],
-    tag_ids: [],
+    tags: []
   });
+  const [tags, setTags] = useState([]);
 
   const history = useHistory();
   const axios = useAxios();
@@ -39,7 +45,11 @@ const SurveyEdit = () => {
 
   const fetchSurvey = (id) => {
     axios.get(`/surveys/${id}`).then(({ data }) => {
-      setInitialValues(data);
+      setInitialValues({
+        ...data,
+        active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
+        active_from: dayjs(data.active_from).format("YYYY-MM-DD")
+      });
     });
   };
 
@@ -47,11 +57,19 @@ const SurveyEdit = () => {
     id && fetchSurvey(id);
   }, [id, axios]);
 
+  useEffect(() => {
+    const fetchTags = () => {
+      axios.get(`/tags`).then(({ data }) => setTags(data))
+    }
+    fetchTags();
+  }, [axios]);
+
   const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
 
     const obj = {
       ...values,
+      tag_ids: values.tags.map(tag => tag.id)
     };
 
     let request;
@@ -84,7 +102,7 @@ const SurveyEdit = () => {
   });
 
   return (
-    <Card className="shadow border-0 mb-4 col-8">
+    <Card className="shadow border-0 mb-4 col-11 col-md-8">
       <CardBody className="py-5">
         <Formik
           initialValues={initialValues}
@@ -111,6 +129,23 @@ const SurveyEdit = () => {
                     rows="6"
                   />
                 </div>
+                <div className="col-12">
+                  <Label className="form-control-label" for="tags">
+                    Tags
+                  </Label>
+                  <Field
+                    name="tags"
+                    component={Typeahead}
+                    options={tags}
+                    id="tags"
+                    labelKey="title"
+                    multiple
+                    selected={values.tags}
+                    onChange={(selected) => {
+                      setFieldValue("tags", [...selected])
+                    }}
+                  />
+                </div>
                 <div className="col-6">
                   <Field
                     name="active_from"
@@ -130,7 +165,6 @@ const SurveyEdit = () => {
                 <SurveyQuestionForm
                   values={values}
                   addQuestion={() => {
-                    console.log(values);
                     setFieldValue("questions", [
                       ...values.questions,
                       questionInitialValues,
@@ -141,7 +175,6 @@ const SurveyEdit = () => {
                       ...values.questions[index].options,
                       optionInitialValues,
                     ]);
-                    // console.log(index, values.questions[index]);
                   }}
                   deleteQuestion={(index) => {
                     const questions = [...values.questions];
@@ -149,10 +182,8 @@ const SurveyEdit = () => {
                     setFieldValue("questions", [...questions]);
                   }}
                   deleteOption={(qIndex, oIndex) => {
-                    //   console.log(index);
                     const options = [...values.questions[qIndex].options];
                     options.splice(oIndex, 1);
-                    //   const options = []
                     setFieldValue(`questions.${qIndex}.options`, [...options]);
                   }}
                 />
