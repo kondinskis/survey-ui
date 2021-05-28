@@ -108,7 +108,7 @@ const Topbar = ({ routes }) => {
                           <i className="fas fa-user text-white"></i>
                           <Media className="ml-2 d-none d-md-block">
                             <span className="mb-0 text-sm font-weight-bold">
-                              {user.identity}
+                              {user.sub}
                             </span>
                           </Media>
                         </Media>
