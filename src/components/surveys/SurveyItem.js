@@ -25,19 +25,16 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
         <p className="description mt-3">{description}</p>
         <div>
           {tags.map((tag) => (
-            <Badge color={color} pill className="mr-1">
+            <Badge color={color} className="mr-1">
               {tag.title}
             </Badge>
           ))}
         </div>
-        <Button
-          className="mt-4"
-          color={color}
-          href="#pablo"
-          onClick={(e) => e.preventDefault()}
-        >
-          Learn more
-        </Button>
+        <Link to={`/take/survey/${id}`}>
+          <Button className="mt-4 mr-2" color={color}>
+            Take survey
+          </Button>
+        </Link>
         <Link to={`/survey/${id}`}>
           <Button className="mt-4" color={color}>
             Edit

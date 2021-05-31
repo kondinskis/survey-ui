@@ -4,6 +4,7 @@ import TagEdit from "./components/tags/TagEdit";
 import Users from "./components/users/Users";
 import UserEdit from "./components/users/UserEdit";
 import SurveyEdit from "./components/surveys/SurveyEdit";
+import TakeSurvey from "./components/surveys/TakeSurvey";
 
 export const routes = [
   {
@@ -18,6 +19,10 @@ export const routes = [
   {
     path: "/survey/:id?",
     component: SurveyEdit
+  },
+  {
+    path: "/take/survey/:id?",
+    component: TakeSurvey
   },
   {
     path: "/users",
