@@ -5,6 +5,7 @@ import Users from "./components/users/Users";
 import UserEdit from "./components/users/UserEdit";
 import SurveyEdit from "./components/surveys/SurveyEdit";
 import TakeSurvey from "./components/surveys/TakeSurvey";
+import SurveyResults from "./components/surveys/SurveyResults";
 
 export const routes = [
   {
@@ -18,11 +19,18 @@ export const routes = [
   },
   {
     path: "/survey/:id?",
-    component: SurveyEdit
+    component: SurveyEdit,
+    exact: true
   },
   {
-    path: "/take/survey/:id?",
-    component: TakeSurvey
+    path: "/survey/:id/take",
+    component: TakeSurvey,
+    exact: true
+  },
+  {
+    path: "/survey/:id/results",
+    component: SurveyResults,
+    exact: true
   },
   {
     path: "/users",

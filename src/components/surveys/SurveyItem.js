@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Badge, Button, Card, CardBody } from "reactstrap";
+import { Badge, Button, ButtonGroup, Card, CardBody } from "reactstrap";
 
 import { get_random, colors } from "../../utils";
 
@@ -16,9 +16,14 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
           >
             <i className="fas fa-poll" />
           </div>
-          <Button color="danger" size="sm" onClick={() => onDelete(id)}>
-            <i className="fas fa-trash"></i>
-          </Button>
+          <ButtonGroup>
+            <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
+              <i className="fas fa-pen"></i>
+            </Button>
+            <Button color="danger" size="sm" onClick={() => onDelete(id)}>
+              <i className="fas fa-trash"></i>
+            </Button>
+          </ButtonGroup>
         </div>
 
         <h6 className={`text-${color} text-uppercase`}>{title}</h6>
@@ -30,14 +35,14 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
             </Badge>
           ))}
         </div>
-        <Link to={`/take/survey/${id}`}>
+        <Link to={`/survey/${id}/take`}>
           <Button className="mt-4 mr-2" color={color}>
             Take survey
           </Button>
         </Link>
-        <Link to={`/survey/${id}`}>
+        <Link to={`/survey/${id}/results`}>
           <Button className="mt-4" color={color}>
-            Edit
+            Results
           </Button>
         </Link>
       </CardBody>
