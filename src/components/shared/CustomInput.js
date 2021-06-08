@@ -2,7 +2,7 @@ import React from "react";
 
 import { FormGroup, FormFeedback, Input, Label } from "reactstrap";
 
-import { get } from '../../utils';
+import { get } from "../../utils";
 
 const CustomInput = ({ field, form: { touched, errors }, ...props }) => (
   <FormGroup className="mb-3">

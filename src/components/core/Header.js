@@ -1,8 +1,11 @@
 const Header = () => {
   return (
-    <div className="position-relative">
-      <section className="section section-lg section-shaped pb-250">
-        <div className="shape shape-style-1 shape-default">
+    <div className="position-relative" style={{ zIndex: -1 }}>
+      <section
+        className="section section-lg section-shaped"
+        style={{ paddingBottom: "15rem" }}
+      >
+        <div className="shape shape-style-1 shape-dark">
           <span />
           <span />
           <span />
@@ -23,7 +26,11 @@ const Header = () => {
             x="0"
             y="0"
           >
-            <polygon className="fill-white" points="2560 0 2560 100 0 100" />
+            <polygon
+              className="fill-white"
+              points="2560 0 2560 100 0 100"
+              fill="white"
+            />
           </svg>
         </div>
       </section>

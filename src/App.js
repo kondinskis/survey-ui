@@ -1,5 +1,3 @@
-import "./App.scss";
-
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Entry from "./components/Entry";
 import Login from "./components/Login";

@@ -19,13 +19,11 @@ const SurveyEdit = () => {
     option: "",
     order: 0,
   };
-  
+
   const questionInitialValues = {
     question: "",
     order: 0,
-    options: [
-      optionInitialValues
-    ],
+    options: [optionInitialValues],
   };
 
   const [initialValues, setInitialValues] = useState({
@@ -34,7 +32,7 @@ const SurveyEdit = () => {
     active_till: "",
     active_from: "",
     questions: [],
-    tags: []
+    tags: [],
   });
   const [tags, setTags] = useState([]);
 
@@ -48,7 +46,7 @@ const SurveyEdit = () => {
       setInitialValues({
         ...data,
         active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
-        active_from: dayjs(data.active_from).format("YYYY-MM-DD")
+        active_from: dayjs(data.active_from).format("YYYY-MM-DD"),
       });
     });
   };
@@ -59,8 +57,8 @@ const SurveyEdit = () => {
 
   useEffect(() => {
     const fetchTags = () => {
-      axios.get(`/tags`).then(({ data }) => setTags(data))
-    }
+      axios.get(`/tags`).then(({ data }) => setTags(data));
+    };
     fetchTags();
   }, [axios]);
 
@@ -69,7 +67,7 @@ const SurveyEdit = () => {
 
     const obj = {
       ...values,
-      tag_ids: values.tags.map(tag => tag.id)
+      tag_ids: values.tags.map((tag) => tag.id),
     };
 
     let request;
@@ -142,7 +140,7 @@ const SurveyEdit = () => {
                     multiple
                     selected={values.tags}
                     onChange={(selected) => {
-                      setFieldValue("tags", [...selected])
+                      setFieldValue("tags", [...selected]);
                     }}
                   />
                 </div>

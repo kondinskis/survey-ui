@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Row, Col, Button } from "reactstrap";
+import { Col, Button, Card, CardBody, Table, ButtonGroup } from "reactstrap";
 import { useAxios } from "../../http/axios-hook";
-import TagItem from "./TagItem";
+
+import Loader from "../shared/Loader";
 
 const Tags = () => {
   const [tags, setTags] = useState([]);
@@ -19,10 +20,8 @@ const Tags = () => {
   };
 
   const deleteTag = (id) => {
-    axios
-      .delete(`/tags/${id}`)
-      .then(() => fetchTags());
-  }
+    axios.delete(`/tags/${id}`).then(() => fetchTags());
+  };
 
   useEffect(() => {
     fetchTags();
@@ -33,18 +32,52 @@ const Tags = () => {
       <div className="d-flex justify-content-end col-lg-12 mb-4">
         <Link to={`/tag`}>
           <Button color="warning">
-            <i className="fas fa-poll-h"></i> Create tag
+            <i className="fas fa-tags"></i> Create tag
           </Button>
         </Link>
       </div>
       <Col lg="12">
-        <Row className="row-grid">
-          {tags.map((tag) => (
-            <Col lg="4">
-              <TagItem {...tag} onDelete={deleteTag} key={tag.id} />
-            </Col>
-          ))}
-        </Row>
+        <Card>
+          <CardBody>
+            <Loader active={loading} />
+            {!loading && (
+              <Table responsive borderless>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tags.map((tag) => (
+                    <tr key={tag.id}>
+                      <td>{tag.title}</td>
+                      <td>{tag.description}</td>
+                      <td className="col-2">
+                        <ButtonGroup size="sm">
+                          <Button
+                            color="success"
+                            tag={Link}
+                            to={`/tag/${tag.id}`}
+                          >
+                            <i className="fas fa-edit"></i>
+                          </Button>
+                          <Button
+                            color="danger"
+                            onClick={() => deleteTag(tag.id)}
+                          >
+                            <i className="fas fa-trash"></i>
+                          </Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+          </CardBody>
+        </Card>
       </Col>
     </>
   );

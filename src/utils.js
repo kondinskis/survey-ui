@@ -7,10 +7,4 @@ const get = (p, o) => {
   return parsedPath.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
 };
 
-const get_random = (items) => {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-const colors = ["primary", "danger", "info", "success"];
-
-export { get, get_random, colors };
+export { get };

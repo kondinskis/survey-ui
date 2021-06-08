@@ -13,12 +13,12 @@ import CustomSelect from "../shared/CustomSelect";
 
 const UserEdit = () => {
   const [initialValues, setInitialValues] = useState({
-      firstname: "",
-      lastname: "",
-      email: "",
-      role_id: -1,
-      password: "",
-      confirm_password: ""
+    firstname: "",
+    lastname: "",
+    email: "",
+    role_id: -1,
+    password: "",
+    confirm_password: "",
   });
 
   const [roles, setRoles] = useState([]);
@@ -34,17 +34,17 @@ const UserEdit = () => {
   };
 
   const fetchRoles = () => {
-      axios.get("/roles").then(({ data }) => {
-          setRoles(data);
-      })
-  }
+    axios.get("/roles").then(({ data }) => {
+      setRoles(data);
+    });
+  };
 
   useEffect(() => {
     id && fetchUser(id);
   }, [id, axios]);
 
   useEffect(() => {
-      fetchRoles();
+    fetchRoles();
   }, [axios]);
 
   const handleSubmit = (values, { setSubmitting }) => {
@@ -52,7 +52,7 @@ const UserEdit = () => {
 
     const obj = {
       ...values,
-      role_id: Number(values.role_id)
+      role_id: Number(values.role_id),
     };
 
     let request;
@@ -73,11 +73,11 @@ const UserEdit = () => {
     email: Yup.string().required("Required").email("Email not valid"),
     role_id: Yup.number().moreThan(-1, "Required").required("Required"),
     ...(!id && {
-        password: Yup.string().required("Required"),
-        confirm_password: Yup.string()
-          .oneOf([Yup.ref("password"), null], "Passwords don't match")
-          .required("Password confirm is required"),
-      }),
+      password: Yup.string().required("Required"),
+      confirm_password: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords don't match")
+        .required("Password confirm is required"),
+    }),
   });
 
   return (
@@ -114,15 +114,15 @@ const UserEdit = () => {
                   />
                 </div>
                 <div className="col-6">
-                    <Field name="role_id" component={CustomSelect} label="Role">
-                      <option value={-1}>Select</option>
-                      {roles.map((role) => (
-                        <option key={role.id} value={role.id}>
-                          {role.name}
-                        </option>
-                      ))}
-                    </Field>
-                  </div>
+                  <Field name="role_id" component={CustomSelect} label="Role">
+                    <option value={-1}>Select</option>
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </Field>
+                </div>
                 <div className="col-6">
                   <Field
                     name="password"

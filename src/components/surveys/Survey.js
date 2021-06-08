@@ -4,6 +4,7 @@ import { useAxios } from "../../http/axios-hook";
 import { Container, Row, Col, Button } from "reactstrap";
 import SurveyItem from "./SurveyItem";
 import { Link } from "react-router-dom";
+import Loader from "../shared/Loader";
 
 const Survey = () => {
   const [surveys, setSurveys] = useState([]);
@@ -29,7 +30,7 @@ const Survey = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <div class="d-flex justify-content-end col-lg-12 mb-4">
+        <div className="d-flex justify-content-end col-lg-12 mb-4">
           <Link to="/survey">
             <Button color="warning">
               <i className="fas fa-poll-h"></i> Create survey
@@ -38,11 +39,13 @@ const Survey = () => {
         </div>
         <Col lg="12">
           <Row className="row-grid">
-            {surveys.map((survey) => (
-              <Col lg="4">
-                <SurveyItem {...survey} onDelete={deleteSurvey} />
-              </Col>
-            ))}
+            <Loader active={loading} color="white" />
+            {!loading &&
+              surveys.map((survey) => (
+                <Col lg="4" key={survey.id}>
+                  <SurveyItem {...survey} onDelete={deleteSurvey} />
+                </Col>
+              ))}
           </Row>
         </Col>
       </Row>

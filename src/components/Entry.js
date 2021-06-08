@@ -29,7 +29,10 @@ const Entry = (props) => {
         <Header />
 
         <Switch>
-          <section className="section section-lg pt-lg-0 mt--200">
+          <section
+            className="section section-lg pt-lg-0"
+            style={{ marginTop: "-8rem" }}
+          >
             <Container>
               <Row className="justify-content-center">
                 <Route path="/" exact>

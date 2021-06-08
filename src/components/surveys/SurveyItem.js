@@ -3,21 +3,14 @@ import { Link } from "react-router-dom";
 
 import { Badge, Button, ButtonGroup, Card, CardBody } from "reactstrap";
 
-import { get_random, colors } from "../../utils";
-
 const SurveyItem = ({ id, title, description, tags, onDelete }) => {
-  const color = get_random(colors);
   return (
-    <Card className="card-lift--hover shadow border-0 mb-4">
+    <Card className="shadow border-0 mb-4">
       <CardBody className="py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <div
-            className={`icon icon-shape icon-shape-${color} rounded-circle`}
-          >
-            <i className="fas fa-poll" />
-          </div>
+          <i className="fas fa-2x fa-poll" />
           <ButtonGroup>
-            <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
+            <Button color="success" size="sm" tag={Link} to={`/survey/${id}`}>
               <i className="fas fa-pen"></i>
             </Button>
             <Button color="danger" size="sm" onClick={() => onDelete(id)}>
@@ -26,24 +19,20 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
           </ButtonGroup>
         </div>
 
-        <h6 className={`text-${color} text-uppercase`}>{title}</h6>
-        <p className="description mt-3">{description}</p>
+        <h6 className={`text-uppercase`}>{title}</h6>
         <div>
           {tags.map((tag) => (
-            <Badge color={color} className="mr-1">
+            <Badge className="mr-1" color="secondary" key={tag.id}>
               {tag.title}
             </Badge>
           ))}
         </div>
+        <p className="description mt-3">{description}</p>
         <Link to={`/survey/${id}/take`}>
-          <Button className="mt-4 mr-2" color={color}>
-            Take survey
-          </Button>
+          <Button className="mt-4 mr-2">Take survey</Button>
         </Link>
         <Link to={`/survey/${id}/results`}>
-          <Button className="mt-4" color={color}>
-            Results
-          </Button>
+          <Button className="mt-4">Results</Button>
         </Link>
       </CardBody>
     </Card>

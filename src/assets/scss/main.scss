@@ -1,52 +1,8 @@
-// Bootstrap Functions
-@import "~bootstrap/scss/functions";
-
-// Variables
-@import "theme/variables";
-
-// Bootstrap Core
+@import "variables";
 @import "~bootstrap/scss/bootstrap";
+@import "bootswatch";
 
-// Core
-@import "theme/functions";
-@import "theme/mixins";
-
-@import "theme/reboot";
-@import "theme/utilities";
-
-@import "theme/alert";
-@import "theme/badge";
-@import "theme/buttons";
-@import "theme/card";
-@import "theme/close";
-@import "theme/custom-forms";
-@import "theme/dropdown";
-@import "theme/forms";
-@import "theme/grid";
-@import "theme/icons";
-@import "theme/input-group";
-@import "theme/list-group";
-@import "theme/modal";
-@import "theme/nav";
-@import "theme/navbar";
-@import "theme/section";
 @import "theme/separator";
-@import "theme/type";
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 
 .rbt-token-removeable {
   padding-right: 1.5rem!important;
