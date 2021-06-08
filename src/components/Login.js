@@ -17,6 +17,7 @@ import * as Yup from "yup";
 
 import CustomInput from "./shared/CustomInput";
 import { useAxios } from "../http/axios-hook";
+import Header from "./core/Header";
 
 const Login = () => {
   const initialValues = {
@@ -57,12 +58,13 @@ const Login = () => {
   return (
     <>
       <div className="main-content">
-        <div className="header bg-gradient-info py-7 py-lg-8"></div>
+        <Header />
+        {/* <div className="header bg-gradient-info py-7 py-lg-8"></div> */}
         {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Col lg="5" md="7">
-              <Card className="bg-secondary shadow border-0">
+              <Card className="shadow border-0 mt--8">
                 <CardBody className="px-lg-5 py-lg-5">
                   <Formik
                     initialValues={initialValues}

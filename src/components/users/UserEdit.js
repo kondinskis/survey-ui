@@ -27,23 +27,23 @@ const UserEdit = () => {
 
   const { id } = useParams();
 
-  const fetchUser = (id) => {
-    axios.get(`/users/${id}`).then(({ data }) => {
-      setInitialValues(data);
-    });
-  };
-
-  const fetchRoles = () => {
-    axios.get("/roles").then(({ data }) => {
-      setRoles(data);
-    });
-  };
-
   useEffect(() => {
+    const fetchUser = (id) => {
+      axios.get(`/users/${id}`).then(({ data }) => {
+        setInitialValues(data);
+      });
+    };
+
     id && fetchUser(id);
   }, [id, axios]);
 
   useEffect(() => {
+    const fetchRoles = () => {
+      axios.get("/roles").then(({ data }) => {
+        setRoles(data);
+      });
+    };
+    
     fetchRoles();
   }, [axios]);
 
@@ -141,7 +141,7 @@ const UserEdit = () => {
                 </div>
               </div>
               <div className="d-flex">
-                <Button color="success" type="submit" disabled={isSubmitting}>
+                <Button color="info" type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Spinner size="sm" color="white" />} Save
                 </Button>
               </div>

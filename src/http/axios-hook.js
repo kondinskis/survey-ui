@@ -70,4 +70,6 @@ export const useAxios = () => {
   return axiosInstance;
 };
 
-export default { useAxios };
+const o = { useAxios };
+
+export default o;

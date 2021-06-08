@@ -10,6 +10,10 @@ import {
   NavLink,
   Collapse,
   NavbarText,
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
 } from "reactstrap";
 
 import UserContext from "../../context/User";
@@ -45,7 +49,17 @@ const Topbar = ({ routes }) => {
                     </NavItem>
                   ))}
               </Nav>
-              <NavbarText>{user.sub}</NavbarText>
+              <Nav navbar>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    {user.sub}
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+              <NavbarText></NavbarText>
             </Collapse>
           </Navbar>
         )}

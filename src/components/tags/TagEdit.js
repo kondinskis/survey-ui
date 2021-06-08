@@ -21,13 +21,13 @@ const TagEdit = () => {
 
   const { id } = useParams();
 
-  const fetchTag = (id) => {
-    axios.get(`/tags/${id}`).then(({ data }) => {
-      setInitialValues(data);
-    });
-  };
-
   useEffect(() => {
+    const fetchTag = (id) => {
+      axios.get(`/tags/${id}`).then(({ data }) => {
+        setInitialValues(data);
+      });
+    };
+
     id && fetchTag(id);
   }, [id, axios]);
 
@@ -85,7 +85,7 @@ const TagEdit = () => {
                 </div>
               </div>
               <div className="d-flex">
-                <Button color="success" type="submit" disabled={isSubmitting}>
+                <Button color="info" type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Spinner size="sm" color="white" />} Save
                 </Button>
               </div>

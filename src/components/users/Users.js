@@ -59,11 +59,11 @@ const Users = () => {
                         <td>{user.firstname}</td>
                         <td>{user.lastname}</td>
                         <td>{user.email}</td>
-                        <td>{user.role.name}</td>
+                        <td className="text-capitalize">{user.role.name.toLowerCase()}</td>
                         <td>
                           <ButtonGroup size="sm">
                             <Button
-                              color="success"
+                              color="info"
                               tag={Link}
                               to={`/user/${user.id}`}
                             >

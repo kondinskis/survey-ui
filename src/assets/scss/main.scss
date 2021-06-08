@@ -4,6 +4,26 @@
 
 @import "theme/separator";
 
-.rbt-token-removeable {
-  padding-right: 1.5rem!important;
+@import "~react-bootstrap-typeahead/css/Typeahead.scss";
+
+.rbt-token {
+  background-color: $gray-300;
+  color: $primary;
+
+  &-active {
+    background-color: $primary;
+    color: $color-white;
+  }
+}
+
+.mt--8 {
+  margin-top: -8rem;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.right-0 {
+  right: 0;
 }

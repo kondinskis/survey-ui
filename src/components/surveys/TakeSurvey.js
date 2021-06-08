@@ -9,6 +9,7 @@ import {
   ListGroupItem,
   Button,
   Badge,
+  Spinner,
 } from "reactstrap";
 
 import { useParams, useHistory } from "react-router-dom";
@@ -17,25 +18,25 @@ import { useAxios } from "../../http/axios-hook";
 const TakeSurvey = () => {
   const [survey, setSurvey] = useState({});
   const [answers, setAnswers] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const history = useHistory();
   const axios = useAxios();
 
   const { id } = useParams();
 
-  const fetchSurvey = (id) => {
-    axios.get(`/surveys/${id}`).then(({ data }) => {
-      console.log(data);
-      setSurvey(data);
-    });
-  };
-
   useEffect(() => {
+    const fetchSurvey = (id) => {
+      axios.get(`/surveys/${id}`).then(({ data }) => {
+        setSurvey(data);
+      });
+    };
+    
     id && fetchSurvey(id);
   }, [id, axios]);
 
   const handleSubmit = (answers) => {
-    // setSubmitting(true);
+    setSubmitting(true);
 
     const obj = {
       answers: Object.keys(answers).map((question) => {
@@ -46,13 +47,11 @@ const TakeSurvey = () => {
       }),
     };
 
-    console.log(obj);
-
     axios
       .post(`/surveys/take/${id}`, obj)
       .then(({ data }) => history.push("/surveys"))
       .catch((err) => console.error(err))
-      .then(() => console.log("4ao"));
+      .then(() => setSubmitting(false));
   };
 
   return (
@@ -96,7 +95,13 @@ const TakeSurvey = () => {
               </ListGroup>
             </>
           ))}
-        <Button onClick={() => handleSubmit(answers)}>Finish</Button>
+        <Button
+          className="d-flex align-items-center"
+          onClick={() => handleSubmit(answers)}
+          disabled={submitting}
+        >
+          {submitting && <Spinner size="sm" color="light" className="mr-2" />} Finish
+        </Button>
       </CardBody>
     </Card>
   );

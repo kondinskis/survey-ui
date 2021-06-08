@@ -28,21 +28,18 @@ const Entry = (props) => {
         {<Topbar {...props} routes={routes} />}
         <Header />
 
-        <Switch>
-          <section
-            className="section section-lg pt-lg-0"
-            style={{ marginTop: "-8rem" }}
-          >
-            <Container>
-              <Row className="justify-content-center">
+        <section className="section section-lg pt-lg-0 mt--8">
+          <Container>
+            <Row className="justify-content-center">
+              <Switch>
                 <Route path="/" exact>
                   <Redirect to={`/surveys`} />
                 </Route>
                 {getRoutes(routes)}
-              </Row>
-            </Container>
-          </section>
-        </Switch>
+              </Switch>
+            </Row>
+          </Container>
+        </section>
       </div>
     </UserContext.Provider>
   );

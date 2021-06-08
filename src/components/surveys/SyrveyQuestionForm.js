@@ -38,7 +38,10 @@ const SurveyQuestionForm = ({
                       <Button
                         color="link"
                         className="position-absolute top-0 right-0 text-danger"
-                        onClick={() => deleteQuestion(index)}
+                        onClick={() => {
+                          deleteQuestion(index);
+                          setCurrentQuestion(index - 1);
+                        }}
                         style={{ padding: "0.05rem 0.3rem" }}
                       >
                         <i className="fas fa-trash"></i>
@@ -76,7 +79,7 @@ const SurveyQuestionForm = ({
                                 style={{ minHeight: "5rem" }}
                               >
                                 <Button
-                                  color="success"
+                                  color="info"
                                   size="sm"
                                   onClick={() => addOption(index)}
                                 >

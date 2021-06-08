@@ -41,17 +41,17 @@ const SurveyEdit = () => {
 
   const { id } = useParams();
 
-  const fetchSurvey = (id) => {
-    axios.get(`/surveys/${id}`).then(({ data }) => {
-      setInitialValues({
-        ...data,
-        active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
-        active_from: dayjs(data.active_from).format("YYYY-MM-DD"),
-      });
-    });
-  };
-
   useEffect(() => {
+    const fetchSurvey = (id) => {
+      axios.get(`/surveys/${id}`).then(({ data }) => {
+        setInitialValues({
+          ...data,
+          active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
+          active_from: dayjs(data.active_from).format("YYYY-MM-DD"),
+        });
+      });
+    };
+
     id && fetchSurvey(id);
   }, [id, axios]);
 
@@ -187,7 +187,7 @@ const SurveyEdit = () => {
                 />
               </div>
               <div className="d-flex">
-                <Button color="success" type="submit" disabled={isSubmitting}>
+                <Button color="info" type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Spinner size="sm" color="white" />} Save
                 </Button>
               </div>

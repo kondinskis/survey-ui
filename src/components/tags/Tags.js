@@ -57,7 +57,7 @@ const Tags = () => {
                       <td className="col-2">
                         <ButtonGroup size="sm">
                           <Button
-                            color="success"
+                            color="info"
                             tag={Link}
                             to={`/tag/${tag.id}`}
                           >

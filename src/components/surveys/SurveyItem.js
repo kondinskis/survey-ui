@@ -10,7 +10,7 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
         <div className="d-flex justify-content-between align-items-center mb-4">
           <i className="fas fa-2x fa-poll" />
           <ButtonGroup>
-            <Button color="success" size="sm" tag={Link} to={`/survey/${id}`}>
+            <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
               <i className="fas fa-pen"></i>
             </Button>
             <Button color="danger" size="sm" onClick={() => onDelete(id)}>
