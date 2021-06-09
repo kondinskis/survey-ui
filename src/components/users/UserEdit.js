@@ -30,7 +30,10 @@ const UserEdit = () => {
   useEffect(() => {
     const fetchUser = (id) => {
       axios.get(`/users/${id}`).then(({ data }) => {
-        setInitialValues(data);
+        setInitialValues({
+          ...data,
+          confirm_password: "",
+        });
       });
     };
 
@@ -43,7 +46,7 @@ const UserEdit = () => {
         setRoles(data);
       });
     };
-    
+
     fetchRoles();
   }, [axios]);
 
@@ -72,11 +75,15 @@ const UserEdit = () => {
     lastname: Yup.string().required("Required"),
     email: Yup.string().required("Required").email("Email not valid"),
     role_id: Yup.number().moreThan(-1, "Required").required("Required"),
+    confirm_password: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords don't match")
+      .when("password", {
+        is: (val) => !!val,
+        then: Yup.string().required("Password confirm is required"),
+        otherwise: Yup.string().notRequired(),
+      }),
     ...(!id && {
       password: Yup.string().required("Required"),
-      confirm_password: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords don't match")
-        .required("Password confirm is required"),
     }),
   });
 
