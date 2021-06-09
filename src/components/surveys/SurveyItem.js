@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 
 import { Badge, Button, ButtonGroup, Card, CardBody } from "reactstrap";
 
-const SurveyItem = ({ id, title, description, tags, onDelete }) => {
+const SurveyItem = ({
+  id,
+  title,
+  description,
+  tags,
+  published,
+  onDelete,
+  onPublish,
+}) => {
   return (
     <Card className="shadow border-0 mb-4">
       <CardBody className="py-5">
@@ -28,12 +36,23 @@ const SurveyItem = ({ id, title, description, tags, onDelete }) => {
           ))}
         </div>
         <p className="description mt-3">{description}</p>
-        <Link to={`/survey/${id}/take`}>
-          <Button className="mt-4 mr-2">Take survey</Button>
-        </Link>
-        <Link to={`/survey/${id}/results`}>
-          <Button className="mt-4">Results</Button>
-        </Link>
+        {published && (
+          <>
+            <Link to={`/survey/${id}/take`}>
+              <Button className="mt-4 mr-2">Take survey</Button>
+            </Link>
+            <Link to={`/survey/${id}/results`}>
+              <Button className="mt-4">View results</Button>
+            </Link>
+          </>
+        )}
+        {!published && (
+          <>
+            <Button className="mt-4 mr-2" onClick={() => onPublish(id)}>
+              Publish survey
+            </Button>
+          </>
+        )}
       </CardBody>
     </Card>
   );

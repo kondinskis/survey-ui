@@ -23,6 +23,10 @@ const Survey = () => {
     axios.delete(`/surveys/${id}`).then(() => fetchSurveys());
   };
 
+  const publishSurvey = (id) => {
+    axios.put(`/surveys/${id}/publish`).then(() => fetchSurveys());
+  }
+
   useEffect(() => {
     fetchSurveys();
   }, [axios]);
@@ -43,7 +47,7 @@ const Survey = () => {
             {!loading &&
               surveys.map((survey) => (
                 <Col lg="4" key={survey.id}>
-                  <SurveyItem {...survey} onDelete={deleteSurvey} />
+                  <SurveyItem {...survey} onDelete={deleteSurvey} onPublish={publishSurvey} />
                 </Col>
               ))}
           </Row>

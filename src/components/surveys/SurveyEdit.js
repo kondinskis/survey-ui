@@ -13,6 +13,7 @@ import { useAxios } from "../../http/axios-hook";
 import * as Yup from "yup";
 import * as dayjs from "dayjs";
 import SurveyQuestionForm from "./SyrveyQuestionForm";
+import CustomCheckbox from "../shared/CustomCheckbox";
 
 const SurveyEdit = () => {
   const optionInitialValues = {
@@ -33,6 +34,7 @@ const SurveyEdit = () => {
     active_from: "",
     questions: [questionInitialValues],
     tags: [],
+    login_required: false,
   });
   const [tags, setTags] = useState([]);
 
@@ -129,7 +131,7 @@ const SurveyEdit = () => {
                     rows="6"
                   />
                 </div>
-                <div className="col-12">
+                <div className="col-8">
                   <Label className="form-control-label" for="tags">
                     Tags
                   </Label>
@@ -144,6 +146,15 @@ const SurveyEdit = () => {
                     onChange={(selected) => {
                       setFieldValue("tags", [...selected]);
                     }}
+                  />
+                </div>
+                <div className="col-4">
+                  <Field
+                    name="login_required"
+                    component={CustomCheckbox}
+                    type="checkbox"
+                    checked={values.login_required}
+                    placeholder="Login required"
                   />
                 </div>
                 <div className="col-6">
