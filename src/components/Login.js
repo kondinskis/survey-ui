@@ -44,10 +44,9 @@ const Login = () => {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .min(2, "Too Short!")
       .required("Required")
       .email("Email not valid"),
-    password: Yup.string().min(6, "Too Short!").required("Required"),
+    password: Yup.string().required("Required"),
   });
 
   useEffect(() => {

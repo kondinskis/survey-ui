@@ -48,7 +48,7 @@ const TakeSurvey = () => {
     };
 
     axios
-      .post(`/surveys/take/${id}`, obj)
+      .post(`/surveys/${id}/take`, obj)
       .then(({ data }) => history.push("/surveys"))
       .catch((err) => console.error(err))
       .then(() => setSubmitting(false));

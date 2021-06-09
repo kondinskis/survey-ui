@@ -31,7 +31,7 @@ const SurveyEdit = () => {
     description: "",
     active_till: "",
     active_from: "",
-    questions: [],
+    questions: [questionInitialValues],
     tags: [],
   });
   const [tags, setTags] = useState([]);
@@ -85,7 +85,9 @@ const SurveyEdit = () => {
   const SurveySchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string().required("Required"),
-    active_till: Yup.date().required("Required"),
+    active_till: Yup.date()
+      .min(Yup.ref("active_from"), "Till date must be after from date")
+      .required("Required"),
     active_from: Yup.date().required("Required"),
     questions: Yup.array().of(
       Yup.object().shape({

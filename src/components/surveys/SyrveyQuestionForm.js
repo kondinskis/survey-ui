@@ -29,7 +29,7 @@ const SurveyQuestionForm = ({
               values.questions.map(
                 (question, index) =>
                   index === currentQuestion && (
-                    <div className="position-relative">
+                    <div className="position-relative" key={index}>
                       <Field
                         name={`questions.${index}.question`}
                         component={CustomInput}
@@ -56,7 +56,10 @@ const SurveyQuestionForm = ({
                                 values.questions[index].options.length > 0 &&
                                 values.questions[index].options.map(
                                   (option, i) => (
-                                    <div className="col-3 position-relative">
+                                    <div
+                                      className="col-3 position-relative"
+                                      key={i}
+                                    >
                                       <Field
                                         name={`questions.${index}.options.${i}.option`}
                                         component={CustomInput}
@@ -99,7 +102,7 @@ const SurveyQuestionForm = ({
             size="sm"
           >
             {Array.from(Array(values.questions.length)).map((_, i) => (
-              <PaginationItem active={i === currentQuestion}>
+              <PaginationItem active={i === currentQuestion} key={i}>
                 <PaginationLink
                   onClick={() => setCurrentQuestion(i)}
                   type="button"

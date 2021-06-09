@@ -14,7 +14,7 @@ const SurveyResults = () => {
 
   useEffect(() => {
     const fetchSurvey = (id) => {
-      axios.get(`/surveys/results/${id}`).then(({ data }) => {
+      axios.get(`/surveys/${id}/results`).then(({ data }) => {
         setSurvey(data);
       });
     };
@@ -49,16 +49,17 @@ const SurveyResults = () => {
                       className="d-flex justify-content-between"
                       style={{
                         background: `linear-gradient(90deg, var(--gray) ${
-                          (option.total / question.total) * 100
+                          ((option.total / question.total) * 100) || 0
                         }%, #ffffff 0%)`,
                         padding: "0.7rem",
                       }}
                     >
                       {option.option}
-                      <p className="m-0">{percentage(question, option)}</p>
+                      <p className="m-0">Votes: {option.total} ({percentage(question, option)})</p>
                     </ListGroupItem>
                   ))}
                 </ListGroup>
+                <p className="text-right">Total votes: {question.total}</p>
               </div>
             ))}
         </div>
