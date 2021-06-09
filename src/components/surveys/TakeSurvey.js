@@ -64,7 +64,7 @@ const TakeSurvey = () => {
         <div>
           {survey.tags &&
             survey.tags.map((tag) => (
-              <Badge color="secondary" className="mr-1">
+              <Badge color="secondary" className="mr-1" key={tag.id}>
                 {tag.title}
               </Badge>
             ))}
@@ -72,13 +72,14 @@ const TakeSurvey = () => {
         <hr />
         {survey.questions &&
           survey.questions.map((question, index) => (
-            <>
+            <div key={question.id}>
               <CardSubtitle tag="h5" className="mb-2">
                 {question.question}
               </CardSubtitle>
               <ListGroup className="mb-4">
                 {question.options.map((option) => (
                   <ListGroupItem
+                    key={option.id}
                     tag="button"
                     action
                     active={answers[question.id] === option.id}
@@ -93,7 +94,7 @@ const TakeSurvey = () => {
                   </ListGroupItem>
                 ))}
               </ListGroup>
-            </>
+            </div>
           ))}
         <Button
           className="d-flex align-items-center"

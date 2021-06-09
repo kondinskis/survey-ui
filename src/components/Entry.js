@@ -7,16 +7,18 @@ import UserContext from "../context/User";
 import Topbar from "./core/Topbar";
 import Header from "./core/Header";
 import { Container, Row } from "reactstrap";
+import PrivateRoute from "./core/PrivateRoute";
 
 const Entry = (props) => {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       return (
-        <Route
+        <PrivateRoute
           path={prop.path}
           component={prop.component}
           key={key}
           exact={prop.exact}
+          auth_required={prop.auth_required}
         />
       );
     });

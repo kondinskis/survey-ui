@@ -13,40 +13,48 @@ export const routes = [
     component: Survey,
     title: "Surveys",
     icon: "fas fa-poll-h",
+    only_coordinator: false,
   },
   {
     path: "/survey/:id?",
     component: SurveyEdit,
     exact: true,
+    only_coordinator: true,
   },
   {
     path: "/survey/:id/take",
     component: TakeSurvey,
     exact: true,
+    only_coordinator: false,
   },
   {
     path: "/survey/:id/results",
     component: SurveyResults,
     exact: true,
+    only_coordinator: false,
   },
   {
     path: "/users",
     component: Users,
     title: "Users",
     icon: "fas fa-users",
+    only_coordinator: true,
   },
   {
     path: "/user/:id?",
     component: UserEdit,
+    only_coordinator: true,
   },
   {
     path: "/tags",
     component: Tags,
     title: "Tags",
     icon: "fas fa-tags",
+    only_coordinator: true,
   },
   {
     path: "/tag/:id?",
     component: TagEdit,
+    only_coordinator: true,
   },
 ];

@@ -26,7 +26,7 @@ export const useAxios = () => {
     instance.interceptors.request.use(
       (config) => {
         // add Authorization header to every api call expect apis containing /auth
-        if (!config.url.includes("/auth")) {
+        if (!config.url.includes("/auth") && localStorage.getItem("access_token")) {
           config.headers.common[
             "Authorization"
           ] = `Bearer ${localStorage.getItem("access_token")}`;

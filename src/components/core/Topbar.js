@@ -27,7 +27,7 @@ const Topbar = ({ routes }) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    history.push("/login");
+    history.push("/");
   };
 
   return (
@@ -41,6 +41,7 @@ const Topbar = ({ routes }) => {
               <Nav className="mr-auto" navbar>
                 {routes
                   .filter((route) => route.title)
+                  .filter((route) => user.coordinator() || (user.coordinator() === route.only_coordinator))
                   .map((route, index) => (
                     <NavItem key={index}>
                       <NavLink to={route.path} tag={Link}>
@@ -50,14 +51,21 @@ const Topbar = ({ routes }) => {
                   ))}
               </Nav>
               <Nav navbar>
-                <UncontrolledDropdown nav inNavbar>
+                {user.sub && <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     {user.sub}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown>}
+                {!user.sub && (
+                  <NavItem>
+                    <NavLink to="/login" tag={Link}>
+                      <i className="fas fa-login" /> Login
+                    </NavLink>
+                  </NavItem>
+                )}
               </Nav>
               <NavbarText></NavbarText>
             </Collapse>

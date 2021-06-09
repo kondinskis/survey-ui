@@ -10,10 +10,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={(props) => {
         const token = localStorage.getItem("access_token");
 
+        let invalid_token = false;
+
+        let decoded_token = {};
+
         try {
-          let decoded_token = jwt_decode(token);
-          return <Component {...props} user={decoded_token} />;
+          decoded_token = jwt_decode(token);
         } catch (err) {
+          invalid_token = true;
+        }
+
+        if (invalid_token && rest.only_coordinator) {
           return (
             <Redirect
               to={{
@@ -23,6 +30,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             />
           );
         }
+
+        const user = {
+          ...decoded_token,
+          coordinator: () => {
+            return ["SYSTEM", "ADMIN"].includes(decoded_token.role || "NO_AUTH");
+          }
+        }
+
+        return <Component {...props} user={user} />;
       }}
     />
   );
