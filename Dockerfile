@@ -3,6 +3,8 @@ FROM node:14-alpine AS builder
 
 WORKDIR /app
 ENV PATH="./node_modules/.bin:$PATH"
+ARG API_BASE_URL
+ENV REACT_APP_API_BASE_URL=$API_BASE_URL
 COPY package.json yarn.lock ./
 RUN yarn --silent
 COPY . ./

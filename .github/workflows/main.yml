@@ -17,6 +17,6 @@ jobs:
           heroku_email: "kondinskis@gmail.com"
           usedocker: true
           docker_build_args: |
-            REACT_APP_API_BASE_URL
+            API_BASE_URL
         env:
-          REACT_APP_API_BASE_URL: ${{secrets.API_BASE_URL}}
+          API_BASE_URL: ${{secrets.API_BASE_URL}}
