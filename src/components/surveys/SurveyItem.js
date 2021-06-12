@@ -12,9 +12,8 @@ const SurveyItem = ({
   published,
   onDelete,
   onPublish,
-  onTakeSurvey
+  onTakeSurvey,
 }) => {
-
   const user = useContext(UserContext);
 
   return (
@@ -22,14 +21,16 @@ const SurveyItem = ({
       <CardBody className="py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <i className="fas fa-2x fa-poll" />
-          {user.coordinator() && <ButtonGroup>
-            <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
-              <i className="fas fa-pen"></i>
-            </Button>
-            <Button color="danger" size="sm" onClick={() => onDelete(id)}>
-              <i className="fas fa-trash"></i>
-            </Button>
-          </ButtonGroup>}
+          {user.coordinator() && (
+            <ButtonGroup>
+              <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
+                <i className="fas fa-pen"></i>
+              </Button>
+              <Button color="danger" size="sm" onClick={() => onDelete(id)}>
+                <i className="fas fa-trash"></i>
+              </Button>
+            </ButtonGroup>
+          )}
         </div>
 
         <h6 className={`text-uppercase`}>{title}</h6>
@@ -43,7 +44,9 @@ const SurveyItem = ({
         <p className="description mt-3">{description}</p>
         {published && (
           <>
-            <Button className="mt-4 mr-2" onClick={() => onTakeSurvey(id)}>Take survey</Button>
+            <Button className="mt-4 mr-2" onClick={() => onTakeSurvey(id)}>
+              Take survey
+            </Button>
             <Link to={`/survey/${id}/results`}>
               <Button className="mt-4">View results</Button>
             </Link>

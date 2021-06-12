@@ -28,7 +28,10 @@ export const useAxios = () => {
     instance.interceptors.request.use(
       (config) => {
         // add Authorization header to every api call expect apis containing /auth
-        if (!config.url.includes("/auth") && localStorage.getItem("access_token")) {
+        if (
+          !config.url.includes("/auth") &&
+          localStorage.getItem("access_token")
+        ) {
           config.headers.common[
             "Authorization"
           ] = `Bearer ${localStorage.getItem("access_token")}`;
@@ -70,7 +73,7 @@ export const useAxios = () => {
         let toastMsg = message;
         if (message === "Token has expired") {
           toastMsg = "Session has expired";
-        } 
+        }
 
         addToast(toastMsg, { appearance: "error" });
         return Promise.reject(error);

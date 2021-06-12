@@ -43,9 +43,7 @@ const Login = () => {
   };
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("Required")
-      .email("Email not valid"),
+    email: Yup.string().required("Required").email("Email not valid"),
     password: Yup.string().required("Required"),
   });
 

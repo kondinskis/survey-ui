@@ -41,7 +41,11 @@ const Topbar = ({ routes }) => {
               <Nav className="mr-auto" navbar>
                 {routes
                   .filter((route) => route.title)
-                  .filter((route) => user.coordinator() || (user.coordinator() === route.only_coordinator))
+                  .filter(
+                    (route) =>
+                      user.coordinator() ||
+                      user.coordinator() === route.only_coordinator
+                  )
                   .map((route, index) => (
                     <NavItem key={index}>
                       <NavLink to={route.path} tag={Link}>
@@ -51,14 +55,16 @@ const Topbar = ({ routes }) => {
                   ))}
               </Nav>
               <Nav navbar>
-                {user.sub && <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    {user.sub}
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>}
+                {user.sub && (
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      {user.sub}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                )}
                 {!user.sub && (
                   <NavItem>
                     <NavLink to="/login" tag={Link}>

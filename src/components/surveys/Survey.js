@@ -25,22 +25,25 @@ const Survey = () => {
   };
 
   const deleteSurvey = (id) => {
-    axios.delete(`/surveys/${id}`)
+    axios
+      .delete(`/surveys/${id}`)
       .then(() => fetchSurveys())
-      .catch(() => {})
+      .catch(() => {});
   };
 
   const publishSurvey = (id) => {
-    axios.put(`/surveys/${id}/publish`)
+    axios
+      .put(`/surveys/${id}/publish`)
       .then(() => fetchSurveys())
-      .catch(() => {})
-  }
+      .catch(() => {});
+  };
 
   const takeSurvey = (id) => {
-    axios.get(`/surveys/${id}/take`)
+    axios
+      .get(`/surveys/${id}/take`)
       .then(() => history.push(`/survey/${id}/take`))
-      .catch(() => {})
-  }
+      .catch(() => {});
+  };
 
   useEffect(() => {
     fetchSurveys();
@@ -49,20 +52,27 @@ const Survey = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        {user.coordinator() && <div className="d-flex justify-content-end col-lg-12 mb-4">
-          <Link to="/survey">
-            <Button color="warning">
-              <i className="fas fa-poll-h"></i> Create survey
-            </Button>
-          </Link>
-        </div>}
+        {user.coordinator() && (
+          <div className="d-flex justify-content-end col-lg-12 mb-4">
+            <Link to="/survey">
+              <Button color="warning">
+                <i className="fas fa-poll-h"></i> Create survey
+              </Button>
+            </Link>
+          </div>
+        )}
         <Col lg="12">
           <Row className="row-grid">
             <Loader active={loading} color="white" />
             {!loading &&
               surveys.map((survey) => (
                 <Col lg="4" key={survey.id}>
-                  <SurveyItem {...survey} onDelete={deleteSurvey} onPublish={publishSurvey} onTakeSurvey={takeSurvey} />
+                  <SurveyItem
+                    {...survey}
+                    onDelete={deleteSurvey}
+                    onPublish={publishSurvey}
+                    onTakeSurvey={takeSurvey}
+                  />
                 </Col>
               ))}
           </Row>
