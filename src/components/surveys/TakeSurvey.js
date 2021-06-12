@@ -27,11 +27,14 @@ const TakeSurvey = () => {
 
   useEffect(() => {
     const fetchSurvey = (id) => {
-      axios.get(`/surveys/${id}`).then(({ data }) => {
-        setSurvey(data);
-      });
+      axios
+        .get(`/surveys/${id}`)
+        .then(({ data }) => {
+          setSurvey(data);
+        })
+        .catch(() => {});
     };
-    
+
     id && fetchSurvey(id);
   }, [id, axios]);
 
@@ -50,7 +53,7 @@ const TakeSurvey = () => {
     axios
       .post(`/surveys/${id}/take`, obj)
       .then(({ data }) => history.push("/surveys"))
-      .catch((err) => console.error(err))
+      .catch(() => {})
       .then(() => setSubmitting(false));
   };
 
@@ -101,7 +104,8 @@ const TakeSurvey = () => {
           onClick={() => handleSubmit(answers)}
           disabled={submitting}
         >
-          {submitting && <Spinner size="sm" color="light" className="mr-2" />} Finish
+          {submitting && <Spinner size="sm" color="light" className="mr-2" />}{" "}
+          Finish
         </Button>
       </CardBody>
     </Card>

@@ -16,11 +16,15 @@ const Tags = () => {
     axios
       .get("/tags")
       .then(({ data }) => setTags(data))
+      .catch(() => {})
       .then(() => setLoading(false));
   };
 
   const deleteTag = (id) => {
-    axios.delete(`/tags/${id}`).then(() => fetchTags());
+    axios
+      .delete(`/tags/${id}`)
+      .then(() => fetchTags())
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -56,11 +60,7 @@ const Tags = () => {
                       <td>{tag.description}</td>
                       <td className="col-2">
                         <ButtonGroup size="sm">
-                          <Button
-                            color="info"
-                            tag={Link}
-                            to={`/tag/${tag.id}`}
-                          >
+                          <Button color="info" tag={Link} to={`/tag/${tag.id}`}>
                             <i className="fas fa-edit"></i>
                           </Button>
                           <Button

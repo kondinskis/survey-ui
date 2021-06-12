@@ -45,13 +45,16 @@ const SurveyEdit = () => {
 
   useEffect(() => {
     const fetchSurvey = (id) => {
-      axios.get(`/surveys/${id}`).then(({ data }) => {
-        setInitialValues({
-          ...data,
-          active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
-          active_from: dayjs(data.active_from).format("YYYY-MM-DD"),
-        });
-      });
+      axios
+        .get(`/surveys/${id}`)
+        .then(({ data }) => {
+          setInitialValues({
+            ...data,
+            active_till: dayjs(data.active_till).format("YYYY-MM-DD"),
+            active_from: dayjs(data.active_from).format("YYYY-MM-DD"),
+          });
+        })
+        .catch(() => {});
     };
 
     id && fetchSurvey(id);
@@ -59,7 +62,10 @@ const SurveyEdit = () => {
 
   useEffect(() => {
     const fetchTags = () => {
-      axios.get(`/tags`).then(({ data }) => setTags(data));
+      axios
+        .get(`/tags`)
+        .then(({ data }) => setTags(data))
+        .catch(() => {});
     };
     fetchTags();
   }, [axios]);
@@ -80,7 +86,7 @@ const SurveyEdit = () => {
     }
     request
       .then(({ data }) => history.push("/surveys"))
-      .catch((err) => console.error(err))
+      .catch(() => {})
       .then(() => setSubmitting(false));
   };
 

@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
 export const useAxios = () => {
   const history = useHistory();
+  const { addToast } = useToasts();
 
   const [axiosInstance] = useState(() => {
     const instance = axios.create({
@@ -42,11 +44,15 @@ export const useAxios = () => {
       async (error) => {
         const request = error.config;
 
+        if (request.url.includes("/auth/refresh")) {
+          return Promise.reject(error);
+        }
+
         // if call fails try refreshing the token,
         // if the token cannot be refreshed redirect to login
+        const { message } = error.response.data;
         if (error.response.status === 401 && !request._retry) {
-          const { msg } = error.response.data;
-          if (msg === "Token has expired") {
+          if (message === "Token has expired") {
             request._retry = true;
             try {
               const access_token = await refreshToken();
@@ -56,10 +62,17 @@ export const useAxios = () => {
               request.headers["Authorization"] = `Bearer ${access_token}`;
               return instance(request);
             } catch (e) {
+              localStorage.clear();
               history.push("/login");
             }
           }
         }
+        let toastMsg = message;
+        if (message === "Token has expired") {
+          toastMsg = "Session has expired";
+        } 
+
+        addToast(toastMsg, { appearance: "error" });
         return Promise.reject(error);
       }
     );

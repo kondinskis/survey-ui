@@ -12,6 +12,7 @@ const SurveyItem = ({
   published,
   onDelete,
   onPublish,
+  onTakeSurvey
 }) => {
 
   const user = useContext(UserContext);
@@ -42,9 +43,7 @@ const SurveyItem = ({
         <p className="description mt-3">{description}</p>
         {published && (
           <>
-            <Link to={`/survey/${id}/take`}>
-              <Button className="mt-4 mr-2">Take survey</Button>
-            </Link>
+            <Button className="mt-4 mr-2" onClick={() => onTakeSurvey(id)}>Take survey</Button>
             <Link to={`/survey/${id}/results`}>
               <Button className="mt-4">View results</Button>
             </Link>

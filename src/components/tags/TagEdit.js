@@ -23,9 +23,12 @@ const TagEdit = () => {
 
   useEffect(() => {
     const fetchTag = (id) => {
-      axios.get(`/tags/${id}`).then(({ data }) => {
-        setInitialValues(data);
-      });
+      axios
+        .get(`/tags/${id}`)
+        .then(({ data }) => {
+          setInitialValues(data);
+        })
+        .catch(() => {});
     };
 
     id && fetchTag(id);
@@ -46,7 +49,7 @@ const TagEdit = () => {
     }
     request
       .then(({ data }) => history.push("/tags"))
-      .catch((err) => console.error(err))
+      .catch(() => {})
       .then(() => setSubmitting(false));
   };
 

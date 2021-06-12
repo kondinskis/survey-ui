@@ -6,11 +6,13 @@ import SurveyItem from "./SurveyItem";
 import { Link } from "react-router-dom";
 import Loader from "../shared/Loader";
 import UserContext from "../../context/User";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Survey = () => {
   const [surveys, setSurveys] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
+  const history = useHistory();
   const axios = useAxios();
 
   const fetchSurveys = () => {
@@ -18,15 +20,26 @@ const Survey = () => {
     axios
       .get("/surveys")
       .then(({ data }) => setSurveys(data))
+      .catch(() => {})
       .then(() => setLoading(false));
   };
 
   const deleteSurvey = (id) => {
-    axios.delete(`/surveys/${id}`).then(() => fetchSurveys());
+    axios.delete(`/surveys/${id}`)
+      .then(() => fetchSurveys())
+      .catch(() => {})
   };
 
   const publishSurvey = (id) => {
-    axios.put(`/surveys/${id}/publish`).then(() => fetchSurveys());
+    axios.put(`/surveys/${id}/publish`)
+      .then(() => fetchSurveys())
+      .catch(() => {})
+  }
+
+  const takeSurvey = (id) => {
+    axios.get(`/surveys/${id}/take`)
+      .then(() => history.push(`/survey/${id}/take`))
+      .catch(() => {})
   }
 
   useEffect(() => {
@@ -49,7 +62,7 @@ const Survey = () => {
             {!loading &&
               surveys.map((survey) => (
                 <Col lg="4" key={survey.id}>
-                  <SurveyItem {...survey} onDelete={deleteSurvey} onPublish={publishSurvey} />
+                  <SurveyItem {...survey} onDelete={deleteSurvey} onPublish={publishSurvey} onTakeSurvey={takeSurvey} />
                 </Col>
               ))}
           </Row>

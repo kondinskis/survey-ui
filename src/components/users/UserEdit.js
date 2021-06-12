@@ -29,12 +29,15 @@ const UserEdit = () => {
 
   useEffect(() => {
     const fetchUser = (id) => {
-      axios.get(`/users/${id}`).then(({ data }) => {
-        setInitialValues({
-          ...data,
-          confirm_password: "",
-        });
-      });
+      axios
+        .get(`/users/${id}`)
+        .then(({ data }) => {
+          setInitialValues({
+            ...data,
+            confirm_password: "",
+          });
+        })
+        .catch(() => {});
     };
 
     id && fetchUser(id);
@@ -42,9 +45,12 @@ const UserEdit = () => {
 
   useEffect(() => {
     const fetchRoles = () => {
-      axios.get("/roles").then(({ data }) => {
-        setRoles(data);
-      });
+      axios
+        .get("/roles")
+        .then(({ data }) => {
+          setRoles(data);
+        })
+        .catch(() => {});
     };
 
     fetchRoles();
@@ -66,7 +72,7 @@ const UserEdit = () => {
     }
     request
       .then(({ data }) => history.push("/users"))
-      .catch((err) => console.error(err))
+      .catch(() => {})
       .then(() => setSubmitting(false));
   };
 

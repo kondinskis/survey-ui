@@ -17,11 +17,15 @@ const Users = () => {
     axios
       .get("/users")
       .then(({ data }) => setUsers(data))
+      .catch(() => {})
       .then(() => setLoading(false));
   };
 
   const deleteUser = (id) => {
-    axios.delete(`/users/${id}`).then(() => fetchUsers());
+    axios
+      .delete(`/users/${id}`)
+      .then(() => fetchUsers())
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -59,7 +63,9 @@ const Users = () => {
                         <td>{user.firstname}</td>
                         <td>{user.lastname}</td>
                         <td>{user.email}</td>
-                        <td className="text-capitalize">{user.role.name.toLowerCase()}</td>
+                        <td className="text-capitalize">
+                          {user.role.name.toLowerCase()}
+                        </td>
                         <td>
                           <ButtonGroup size="sm">
                             <Button

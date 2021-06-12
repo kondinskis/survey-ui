@@ -18,7 +18,7 @@ const Entry = (props) => {
           component={prop.component}
           key={key}
           exact={prop.exact}
-          auth_required={prop.auth_required}
+          only_coordinator={prop.only_coordinator}
         />
       );
     });

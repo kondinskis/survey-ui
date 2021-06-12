@@ -34,7 +34,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         const user = {
           ...decoded_token,
           coordinator: () => {
-            return ["SYSTEM", "ADMIN"].includes(decoded_token.role || "NO_AUTH");
+            return ["SYSTEM", "ADMIN"].includes(decoded_token.role);
           }
         }
 
