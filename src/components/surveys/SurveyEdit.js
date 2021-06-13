@@ -149,6 +149,7 @@ const SurveyEdit = () => {
                     labelKey="title"
                     multiple
                     selected={values.tags}
+                    className="mb-3"
                     onChange={(selected) => {
                       setFieldValue("tags", [...selected]);
                     }}
