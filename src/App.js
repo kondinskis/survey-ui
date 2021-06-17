@@ -4,6 +4,8 @@ import Entry from "./components/Entry";
 import Login from "./components/Login";
 import PrivateRoute from "./components/core/PrivateRoute";
 import Register from "./components/Register";
+import ForgotPassword from "./components/ForgotPassword";
+import SetPassword from "./components/SetPassword";
 
 const App = () => {
   return (
@@ -12,6 +14,8 @@ const App = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/forgot-password" component={ForgotPassword} />
+          <Route exact path="/set-password" component={SetPassword} />
           <PrivateRoute path="/" component={Entry} />
         </Switch>
       </BrowserRouter>

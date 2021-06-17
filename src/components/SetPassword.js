@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   Button,
@@ -8,9 +8,8 @@ import {
   Row,
   Col,
   Spinner,
-  Alert,
 } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -19,32 +18,39 @@ import CustomInput from "./shared/CustomInput";
 import { useAxios } from "../http/axios-hook";
 import Header from "./core/Header";
 
-const Login = () => {
+const SetPassword = () => {
   const initialValues = {
-    email: "",
     password: "",
+    confirm_password: "",
   };
-  const [error, setError] = useState("");
 
+  const location = useLocation();
   const history = useHistory();
   const axios = useAxios();
 
   const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
+    const token = new URLSearchParams(location.search).get("token");
+
+    const obj = {
+      ...values,
+      token,
+    };
+
     axios
-      .post(`/auth/token`, values)
+      .post(`/forgot-password/set`, obj)
       .then(({ data }) => {
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("refresh_token", data.refresh_token);
-        history.push("/");
+        history.push("/login");
       })
-      .catch((err) => setError(err.response.data.message))
+      .catch(() => {})
       .then(() => setSubmitting(false));
   };
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().required("Required").email("Email not valid"),
+  const SetPasswordSchema = Yup.object().shape({
     password: Yup.string().required("Required"),
+    confirm_password: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords don't match")
+      .required("Password confirm is required"),
   });
 
   return (
@@ -53,31 +59,33 @@ const Login = () => {
         <Header />
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
-            <Col lg="5" md="7">
+            <Col lg="6" md="8">
               <Card className="shadow border-0 mt--8">
                 <CardBody className="px-lg-5 py-lg-5">
                   <Formik
                     initialValues={initialValues}
-                    validationSchema={LoginSchema}
+                    validationSchema={SetPasswordSchema}
                     onSubmit={handleSubmit}
                   >
                     {({ values, isSubmitting }) => (
                       <Form>
-                        <h6 className="heading-small text-muted mb-4">Login</h6>
-                        {error && <Alert color="danger">{error}</Alert>}
+                        <h6 className="heading-small text-muted mb-4">
+                          Set password
+                        </h6>
                         <Row>
-                          <Col xs="12">
-                            <Field
-                              name="email"
-                              component={CustomInput}
-                              placeholder="Email"
-                            />
-                          </Col>
                           <Col xs="12">
                             <Field
                               name="password"
                               component={CustomInput}
                               placeholder="Password"
+                              type="password"
+                            />
+                          </Col>
+                          <Col xs="12">
+                            <Field
+                              name="confirm_password"
+                              component={CustomInput}
+                              placeholder="Confirm password"
                               type="password"
                             />
                           </Col>
@@ -90,30 +98,8 @@ const Login = () => {
                           disabled={isSubmitting}
                         >
                           {isSubmitting && <Spinner size="sm" color="white" />}{" "}
-                          Login
+                          Sign up
                         </Button>
-
-                        <div className="d-flex justify-content-center align-items-center">
-                          <Button
-                            className="p-1"
-                            color="link"
-                            type="button"
-                            tag={Link}
-                            to={`/forgot-password`}
-                          >
-                            Forgot password?
-                          </Button>
-                          <span>·</span>
-                          <Button
-                            className="p-1"
-                            color="link"
-                            type="button"
-                            tag={Link}
-                            to={`/register`}
-                          >
-                            Sign up for survey
-                          </Button>
-                        </div>
                       </Form>
                     )}
                   </Formik>
@@ -127,4 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SetPassword;
