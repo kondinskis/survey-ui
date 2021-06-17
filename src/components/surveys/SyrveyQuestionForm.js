@@ -7,6 +7,7 @@ import CustomInput from "../shared/CustomInput";
 
 const SurveyQuestionForm = ({
   values,
+  errors,
   addQuestion,
   addOption,
   deleteQuestion,
@@ -22,6 +23,13 @@ const SurveyQuestionForm = ({
           <div className="col-12">
             <div className="d-flex align-items-center mb-2">
               <h4 className="mb-0">Questions</h4>
+              {errors &&
+                errors.questions &&
+                typeof errors.questions === "string" && (
+                  <div className="d-block invalid-feedback ml-1">
+                    *{errors.questions}
+                  </div>
+                )}
             </div>
 
             {values.questions &&
@@ -50,7 +58,18 @@ const SurveyQuestionForm = ({
                         name="options"
                         render={() => (
                           <>
-                            <h6>Options</h6>
+                            <div className="d-flex align-items-center mb-2">
+                              <h6 className="mb-0">Options</h6>
+                              {errors &&
+                                errors.questions &&
+                                errors.questions[index] &&
+                                typeof errors.questions[index].options ===
+                                  "string" && (
+                                  <div className="d-block invalid-feedback ml-1">
+                                    *{errors.questions[index].options}
+                                  </div>
+                                )}
+                            </div>
                             <div className="form-row">
                               {values.questions[index].options &&
                                 values.questions[index].options.length > 0 &&
@@ -107,7 +126,10 @@ const SurveyQuestionForm = ({
                   onClick={() => setCurrentQuestion(i)}
                   type="button"
                 >
-                  {i + 1}
+                  {i + 1}{" "}
+                  {errors.questions && errors.questions[i] && (
+                    <span className="text-danger">*</span>
+                  )}
                 </PaginationLink>
               </PaginationItem>
             ))}

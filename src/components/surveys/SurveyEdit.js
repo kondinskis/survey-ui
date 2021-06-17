@@ -97,16 +97,22 @@ const SurveyEdit = () => {
       .min(Yup.ref("active_from"), "Till date must be after from date")
       .required("Required"),
     active_from: Yup.date().required("Required"),
-    questions: Yup.array().of(
-      Yup.object().shape({
-        question: Yup.string().required("Required"),
-        options: Yup.array().of(
-          Yup.object().shape({
-            option: Yup.string().required("Required"),
-          })
-        ),
-      })
-    ),
+    questions: Yup.array()
+      .required("Must have at least 1 question")
+      .min(1, "Must have at least 1 question")
+      .of(
+        Yup.object().shape({
+          question: Yup.string().required("Required"),
+          options: Yup.array()
+            .required("Must have at least 1 option")
+            .min(1, "Must have at least 1 option")
+            .of(
+              Yup.object().shape({
+                option: Yup.string().required("Required"),
+              })
+            ),
+        })
+      ),
   });
 
   return (
@@ -182,6 +188,7 @@ const SurveyEdit = () => {
                 </div>
                 <SurveyQuestionForm
                   values={values}
+                  errors={errors}
                   addQuestion={() => {
                     setFieldValue("questions", [
                       ...values.questions,
