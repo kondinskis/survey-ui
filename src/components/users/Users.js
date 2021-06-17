@@ -6,6 +6,7 @@ import { Col, Button, Table, CardBody, Card, ButtonGroup } from "reactstrap";
 import Loader from "../shared/Loader";
 
 import { useAxios } from "../../http/axios-hook";
+import Confirm from "../shared/Confirm";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -21,10 +22,17 @@ const Users = () => {
       .then(() => setLoading(false));
   };
 
-  const deleteUser = (id) => {
-    axios
-      .delete(`/users/${id}`)
-      .then(() => fetchUsers())
+  const deleteUser = (user) => {
+    Confirm({
+      message: `Are you sure you want to delete {0} {1}?`,
+      args: [user.firstname, user.lastname],
+    })
+      .then(() => {
+        axios
+          .delete(`/users/${user.id}`)
+          .then(() => fetchUsers())
+          .catch(() => {});
+      })
       .catch(() => {});
   };
 
@@ -77,7 +85,7 @@ const Users = () => {
                             </Button>
                             <Button
                               color="danger"
-                              onClick={() => deleteUser(user.id)}
+                              onClick={() => deleteUser(user)}
                             >
                               <i className="fas fa-trash"></i>
                             </Button>

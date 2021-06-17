@@ -26,7 +26,7 @@ const SurveyItem = ({
               <Button color="info" size="sm" tag={Link} to={`/survey/${id}`}>
                 <i className="fas fa-pen"></i>
               </Button>
-              <Button color="danger" size="sm" onClick={() => onDelete(id)}>
+              <Button color="danger" size="sm" onClick={() => onDelete()}>
                 <i className="fas fa-trash"></i>
               </Button>
             </ButtonGroup>

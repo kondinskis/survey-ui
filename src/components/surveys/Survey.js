@@ -6,7 +6,8 @@ import SurveyItem from "./SurveyItem";
 import { Link } from "react-router-dom";
 import Loader from "../shared/Loader";
 import UserContext from "../../context/User";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
+import Confirm from "../shared/Confirm";
 
 const Survey = () => {
   const [surveys, setSurveys] = useState([]);
@@ -24,10 +25,17 @@ const Survey = () => {
       .then(() => setLoading(false));
   };
 
-  const deleteSurvey = (id) => {
-    axios
-      .delete(`/surveys/${id}`)
-      .then(() => fetchSurveys())
+  const deleteSurvey = (survey) => {
+    Confirm({
+      message: `Are you sure you want to delete {0}?`,
+      args: [survey.title],
+    })
+      .then(() => {
+        axios
+          .delete(`/surveys/${survey.id}`)
+          .then(() => fetchSurveys())
+          .catch(() => {});
+      })
       .catch(() => {});
   };
 
@@ -69,7 +77,7 @@ const Survey = () => {
                 <Col lg="4" key={survey.id}>
                   <SurveyItem
                     {...survey}
-                    onDelete={deleteSurvey}
+                    onDelete={() => deleteSurvey(survey)}
                     onPublish={publishSurvey}
                     onTakeSurvey={takeSurvey}
                   />

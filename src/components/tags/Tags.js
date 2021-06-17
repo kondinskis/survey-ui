@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Col, Button, Card, CardBody, Table, ButtonGroup } from "reactstrap";
 import { useAxios } from "../../http/axios-hook";
+import Confirm from "../shared/Confirm";
 
 import Loader from "../shared/Loader";
 
@@ -20,10 +21,17 @@ const Tags = () => {
       .then(() => setLoading(false));
   };
 
-  const deleteTag = (id) => {
-    axios
-      .delete(`/tags/${id}`)
-      .then(() => fetchTags())
+  const deleteTag = (tag) => {
+    Confirm({
+      message: `Are you sure you want to delete {0}?`,
+      args: [tag.title],
+    })
+      .then(() => {
+        axios
+          .delete(`/tags/${tag.id}`)
+          .then(() => fetchTags())
+          .catch(() => {});
+      })
       .catch(() => {});
   };
 
@@ -63,10 +71,7 @@ const Tags = () => {
                           <Button color="info" tag={Link} to={`/tag/${tag.id}`}>
                             <i className="fas fa-edit"></i>
                           </Button>
-                          <Button
-                            color="danger"
-                            onClick={() => deleteTag(tag.id)}
-                          >
+                          <Button color="danger" onClick={() => deleteTag(tag)}>
                             <i className="fas fa-trash"></i>
                           </Button>
                         </ButtonGroup>
